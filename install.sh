@@ -3,7 +3,7 @@
 set -ex
 
 # Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Install the spaceship theme.
 ZSH_CUSTOM=~/.oh-my-zsh
@@ -15,8 +15,8 @@ ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/the
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 # Install ruby
-apt-get update && apt-get install -y ruby-full build-essential
-gem install colorls
+sudo apt-get update && sudo apt-get install -y ruby-full build-essential
+sudo gem install colorls -v 1.2.0
 
 cp ./.zshrc ~/.zshrc
 mkdir -p ~/.config
