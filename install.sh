@@ -4,6 +4,7 @@
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Install the spaceship theme.
+ZSH_CUSTOM=$(zsh -c "echo $ZSH_CUSTOM")
 git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
 ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 
@@ -14,5 +15,4 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 apt-get update && apt-get install -y ruby-full build-essential
 gem install colorls
 
-rm ~/.zshrc
-ln -s ./.zshrc ~/.zshrc
+cp ./.zshrc ~/.zshrc
