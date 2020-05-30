@@ -2,8 +2,9 @@
 
 set -ex
 
-# Install oh-my-zsh
-# sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Install oh-my-zsh.
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || echo "No stdin"
+
 
 # Install the spaceship theme.
 ZSH_CUSTOM=~/.oh-my-zsh
