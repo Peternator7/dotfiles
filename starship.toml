@@ -1,0 +1,18 @@
+# Starship prompt configuration
+# https://starship.rs/config/
+
+# Give slow tools (git on large repos, WSL filesystem, etc.) a bit more time
+command_timeout = 2000
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol   = "[❯](bold red)"
+
+[directory]
+truncation_length = 4
+truncate_to_repo  = true
+
+[git_status]
+# Keep it concise
+ahead  = "⇡${count}"
+behind = "⇣${count}"

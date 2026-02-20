@@ -1,24 +1,46 @@
-#/bin/bash
+#!/usr/bin/env bash
 
-set -ex
+set -euo pipefail
 
-# Install oh-my-zsh.
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || echo "No stdin"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# ---------------------------------------------------------------------------
+# Package installation
+# ---------------------------------------------------------------------------
 
-# Install the spaceship theme.
-ZSH_CUSTOM=~/.oh-my-zsh
-echo $ZSH_CUSTOM
-git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
-ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+if command -v apt-get &>/dev/null; then
+    sudo apt-get update -qq
+    sudo apt-get install -y ripgrep fd-find fzf eza
+elif command -v brew &>/dev/null; then
+    brew install ripgrep fd fzf eza
+else
+    echo "WARNING: Neither apt-get nor brew found. Install ripgrep, fd, fzf, and eza manually." >&2
+fi
 
-# Install syntax highlighting
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# ---------------------------------------------------------------------------
+# Starship prompt
+# ---------------------------------------------------------------------------
 
-# Install ruby
-sudo apt-get update && sudo apt-get install -y ruby-full build-essential
-sudo gem install colorls -v 1.2.0
+if ! command -v starship &>/dev/null; then
+    curl -sS https://starship.rs/install.sh | sh
+else
+    echo "starship already installed, skipping."
+fi
 
-cp ./.zshrc ~/.zshrc
+# ---------------------------------------------------------------------------
+# Symlink configs
+# ---------------------------------------------------------------------------
+
+# .bashrc — back up any non-symlink existing file
+if [[ -f ~/.bashrc && ! -L ~/.bashrc ]]; then
+    echo "Backing up existing ~/.bashrc to ~/.bashrc.bak"
+    mv ~/.bashrc ~/.bashrc.bak
+fi
+ln -sf "$DOTFILES_DIR/.bashrc" ~/.bashrc
+
+# starship config
 mkdir -p ~/.config
-cp -r ./colorls ~/.config/colorls
+ln -sf "$DOTFILES_DIR/starship.toml" ~/.config/starship.toml
+
+echo ""
+echo "Done! Open a new shell or run: source ~/.bashrc"
