@@ -1,9 +1,3 @@
-# Only run for interactive shells
-case $- in
-    *i*) ;;
-      *) return;;
-esac
-
 # Source system-wide config if present
 [[ -f /etc/bash.bashrc ]] && . /etc/bash.bashrc
 

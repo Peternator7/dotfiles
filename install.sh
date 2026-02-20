@@ -38,6 +38,13 @@ if [[ -f ~/.bashrc && ! -L ~/.bashrc ]]; then
 fi
 ln -sf "$DOTFILES_DIR/.bashrc" ~/.bashrc
 
+# .profile — back up any non-symlink existing file
+if [[ -f ~/.profile && ! -L ~/.profile ]]; then
+    echo "Backing up existing ~/.profile to ~/.profile.bak"
+    mv ~/.profile ~/.profile.bak
+fi
+ln -sf "$DOTFILES_DIR/.profile" ~/.profile
+
 # starship config
 mkdir -p ~/.config
 ln -sf "$DOTFILES_DIR/starship.toml" ~/.config/starship.toml
