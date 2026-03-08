@@ -5,29 +5,6 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # ---------------------------------------------------------------------------
-# Package installation
-# ---------------------------------------------------------------------------
-
-if command -v apt-get &>/dev/null; then
-    sudo apt-get update -qq
-    sudo apt-get install -y ripgrep fd-find fzf eza
-elif command -v brew &>/dev/null; then
-    brew install ripgrep fd fzf eza
-else
-    echo "WARNING: Neither apt-get nor brew found. Install ripgrep, fd, fzf, and eza manually." >&2
-fi
-
-# ---------------------------------------------------------------------------
-# Starship prompt
-# ---------------------------------------------------------------------------
-
-if ! command -v starship &>/dev/null; then
-    curl -sS https://starship.rs/install.sh | sh
-else
-    echo "starship already installed, skipping."
-fi
-
-# ---------------------------------------------------------------------------
 # Symlink configs
 # ---------------------------------------------------------------------------
 
